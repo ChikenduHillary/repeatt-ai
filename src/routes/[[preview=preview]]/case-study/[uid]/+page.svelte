@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { SliceZone } from '@prismicio/svelte';
-	import type { PageProps } from './$types';
 
 	import { components } from '$lib/slices';
+	import type { PageProps } from './$types';
 
 	const { data }: PageProps = $props();
 </script>
 
-<SliceZone slices={data.slices} {components} />
+<SliceZone slices={data.settings.data.slices} {components} />

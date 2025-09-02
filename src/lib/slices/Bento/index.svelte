@@ -21,7 +21,9 @@
 		<PrismicRichText field={slice.primary.body} />
 	</div>
 
-	<div class="md:grid-col-3 mt-16 grid max-w-4xl grid-rows-[auto_auto_auto] gap-8 md:gap-10">
+	<div
+		class="md:grid-col-3 mt-16 grid max-w-4xl grid-rows-[auto_auto_auto] gap-8 md:grid-cols-3 md:gap-10"
+	>
 		{#each slice.primary.item as item}
 			<div
 				class={clsx(
@@ -33,8 +35,9 @@
 					<PrismicText field={item.title} />
 				</h3>
 				<div class="max-w-md text-balance text-gray-300">
-					<PrismicImage field={item.image} class="max-h-36 w-auto" />
+					<PrismicRichText field={item.body} />
 				</div>
+				<PrismicImage field={item.image} class="max-h-36 w-auto" />
 			</div>
 		{/each}
 	</div>
