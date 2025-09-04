@@ -16,8 +16,6 @@
 		slice,
 		caseStudies
 	}: Props & { caseStudies: import('@prismicio/client').Content.CaseStudyDocument[] } = $props();
-
-	console.log({ caseStudies });
 </script>
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>

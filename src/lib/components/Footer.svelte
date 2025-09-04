@@ -4,8 +4,6 @@
 
 	/** @type {import("@prismicio/client").Content.SettingsDocument}*/
 	export let settings;
-
-	console.log('Settings data:', settings);
 </script>
 
 <footer>

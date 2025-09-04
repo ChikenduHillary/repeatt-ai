@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Bounded from '$lib/components/Bounded.svelte';
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 	import type { Content } from '@prismicio/client';
 	import {
 		PrismicImage,
@@ -12,10 +15,54 @@
 	import IconCycle from '~icons/ph/arrows-clockwise';
 	import ButtonLink from '$lib/components/ButtonLink.svelte';
 	import clsx from 'clsx';
+	import { onMount } from 'svelte';
 
 	type Props = SliceComponentProps<Content.ShowcaseSlice>;
 
 	const { slice }: Props = $props();
+
+	onMount(() => {
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		if (prefersReducedMotion) {
+			return;
+		}
+
+		gsap.registerPlugin(ScrollTrigger);
+
+		gsap.fromTo(
+			'.showcase__heading',
+			{ y: 100 },
+			{
+				y: 0,
+				opacity: 1,
+				duration: 1,
+				ease: 'power2.inOut',
+				scrollTrigger: {
+					trigger: '.showcase__heading',
+					start: 'top bottom-=40%',
+					toggleActions: 'play pause resume reverse'
+				}
+			}
+		);
+
+		gsap.fromTo(
+			'.showcase__glow',
+			{ scale: 0.7, opacity: 0.1 },
+			{
+				scale: 1,
+				opacity: 0.5,
+				duration: 1,
+				ease: 'power2.inOut',
+				stagger: 0.1,
+				scrollTrigger: {
+					trigger: '.showcase__heading',
+					start: 'top bottom-=40%',
+					toggleActions: 'play pause resume reverse'
+				}
+			}
+		);
+	});
 
 	const icons = {
 		gear: IconGear,
@@ -25,7 +72,7 @@
 
 <Bounded data-slice-type={slice.slice_type} data-slice-variation={slice.variation}>
 	<div
-		class=" absolute -z-10 aspect-video w-full max-w-2xl rounded-full bg-violet-500/30 mix-blend-screen blur-[120px] filter"
+		class="showcase__glow absolute -z-10 aspect-video w-full max-w-2xl rounded-full bg-violet-500/30 mix-blend-screen blur-[120px] filter"
 	></div>
 	{#if slice.primary.heading}
 		<h2 class="showcase__heading text-center text-5xl font-medium text-balance md:text-7xl">
@@ -40,11 +87,14 @@
 		<div>
 			{#if slice.primary.icon}
 				<div class="w-fit rounded-lg bg-violet-800 p-4 text-3xl">
-					<svelte:component this={icons[slice.primary.icon]} />
+					{#if icons[slice.primary.icon]}
+						{@const Icon = icons[slice.primary.icon]}
+						<Icon />
+					{/if}
 				</div>
 			{/if}
 			{#if slice.primary.subheading}
-				<h3>
+				<h3 class="mt-6 text-2xl font-normal">
 					<PrismicText field={slice.primary.subheading} />
 				</h3>
 			{/if}
