@@ -16,7 +16,7 @@ export const repositoryName = import.meta.env.VITE_PRISMIC_ENVIRONMENT || sm.rep
 const routes: Route[] = [
 	{ type: 'page', path: '/', uid: 'home' },
 	{ type: 'page', path: '/:uid' },
-	{ type: 'case_study', path: '/case-studies/:uid' }
+	{ type: 'case_study', path: '/case-study/:uid' }
 ];
 
 /**

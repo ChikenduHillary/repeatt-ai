@@ -4,11 +4,7 @@ import { createClient } from '$lib/prismicio';
 import { mappers } from '$lib/slices/mappers';
 
 export async function load({ fetch, cookies }) {
-	console.log('Loading home page data....');
-
 	const client = createClient({ fetch, cookies });
-
-	console.log('Loading home page data...');
 
 	const page = await client.getByUID('page', 'home');
 	const slices = await mapSliceZone(page.data.slices, mappers, { client });
